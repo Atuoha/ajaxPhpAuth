@@ -69,12 +69,21 @@ if(isset($_POST['login_email'])){
     }else{
         while($row = mysqli_fetch_array($check_email_entry)){
             $id = $row['id'];
+            $email = $row['email'];
             $db_pass= $row['pass'];
         }
 
         if(password_verify($pass, $db_pass)){
             //session shits and redirects to dashboard
-            echo "Logged in.....";
+            $_session['loggedUser'] = $id;
+            // header('.......')
+            ?>
+           <style>
+               .form-group{display: none}
+            </style>
+
+            <?php
+            echo "<span class='alert alert-success'><i class='fa fa-user'></i> Logged in using " . $email . "</span>";
         }else{
             echo "<span class='alert alert-danger'><a href='#' class='close' data-dismiss='alert' aria-label='close' >&times;</a> Password mismatch....</span>";
         }
